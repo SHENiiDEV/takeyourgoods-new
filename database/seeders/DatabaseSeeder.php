@@ -21,14 +21,23 @@ class DatabaseSeeder extends Seeder
 
         // 1. Create Demo User
         $user = User::create([
-            'name' => 'Alexander Vance',
+            'name' => 'Alexander',
+            'surname' => 'Vance',
             'email' => 'demo@takeyourgoods.co.uk',
             'password' => Hash::make('password'),
+            'phone' => '+44 20 7946 0991',
+            'date_of_birth' => '1988-04-12',
+            'street_address' => '24 Canary Riverside, Canary Wharf',
+            'city' => 'London',
+            'country' => 'United Kingdom',
+            'postcode' => 'E14 8RS',
+            'terms_accepted_at' => now(),
             'company_name' => 'Vance Global Logistics & Commerce Ltd',
             'vat_number' => 'GB394829104',
-            'billing_address' => '24 Canary Riverside, Canary Wharf, London, E14 8RS, UK',
+            'billing_address' => '24 Canary Riverside, Canary Wharf, London, E14 8RS, United Kingdom',
             'wallet_balance' => 0.00,
         ]);
+
 
         // 2. Add Top-Up Funds & Generate Official Invoice
         $walletService->topUp(

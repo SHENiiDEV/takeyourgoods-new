@@ -35,18 +35,76 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $excludedCountries = [
+            'Sudan',
+            'Dem. Rep. of the Congo',
+            'Democratic Republic of the Congo',
+            'Congo, Democratic Republic of the',
+            'Iran',
+            'Iran, Islamic Republic of',
+            'Mali',
+            'Myanmar',
+            'Myanmar (Burma)',
+            'Burma',
+            'North Korea',
+            'Korea, Democratic People\'s Republic of',
+            'South Sudan',
+            'Syria',
+            'Syrian Arab Republic',
+            'Yemen',
+            'Afghanistan',
+            'Belarus',
+            'Central African Republic',
+            'Cuba',
+            'Haiti',
+            'Iraq',
+            'Russia',
+            'Russian Federation',
+            'Somalia',
+            'Venezuela',
+            'Venezuela, Bolivarian Republic of',
+            'Zimbabwe',
+        ];
+
         $request->validate([
             'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
-            'company_name' => 'nullable|string|max:255',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'phone' => 'required|string|max:50',
+            'date_of_birth' => 'required|date|before:today',
+            'street_address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'country' => ['required', 'string', 'max:255', \Illuminate\Validation\Rule::notIn($excludedCountries)],
+            'postcode' => 'required|string|max:30',
+            'company_name' => 'nullable|string|max:255',
+            'terms' => 'accepted',
+        ], [
+            'terms.accepted' => 'You must agree to the Terms & Conditions and Privacy Policy.',
+            'country.not_in' => 'We are unable to onboard corporate accounts from this jurisdiction due to compliance restrictions.',
         ]);
+
+        $formattedBillingAddress = trim(
+            $request->street_address . ', ' . 
+            $request->city . ', ' . 
+            $request->postcode . ', ' . 
+            $request->country
+        );
 
         $user = User::create([
             'name' => $request->name,
+            'surname' => $request->surname,
             'email' => $request->email,
-            'company_name' => $request->company_name,
             'password' => Hash::make($request->password),
+            'phone' => $request->phone,
+            'date_of_birth' => $request->date_of_birth,
+            'street_address' => $request->street_address,
+            'city' => $request->city,
+            'country' => $request->country,
+            'postcode' => $request->postcode,
+            'company_name' => $request->company_name,
+            'billing_address' => $formattedBillingAddress,
+            'terms_accepted_at' => now(),
             'wallet_balance' => 0.00,
         ]);
 
@@ -63,5 +121,6 @@ class RegisteredUserController extends Controller
 
         return redirect(route('dashboard', absolute: false));
     }
+
 }
 

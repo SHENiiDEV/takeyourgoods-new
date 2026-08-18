@@ -25,22 +25,34 @@ class TakeYourGoodsTest extends TestCase
         Mail::fake();
 
         $response = $this->post('/register', [
-            'name' => 'Alexander Vance',
+            'name' => 'Alexander',
+            'surname' => 'Vance',
             'email' => 'alex@vance-logistics.co.uk',
             'company_name' => 'Vance Logistics Ltd',
             'password' => 'Password123!',
             'password_confirmation' => 'Password123!',
+            'phone' => '+44 20 7946 0991',
+            'date_of_birth' => '1990-05-15',
+            'street_address' => '126 East Ferry Road',
+            'city' => 'London',
+            'country' => 'United Kingdom',
+            'postcode' => 'E14 9FP',
+            'terms' => true,
         ]);
 
         $response->assertRedirect('/dashboard');
         $this->assertDatabaseHas('users', [
             'email' => 'alex@vance-logistics.co.uk',
             'company_name' => 'Vance Logistics Ltd',
+            'name' => 'Alexander',
+            'surname' => 'Vance',
+            'city' => 'London',
             'wallet_balance' => 0.00,
         ]);
 
         Mail::assertSent(WelcomeEmail::class);
     }
+
 
     public function test_wallet_top_up_credits_balance_and_generates_invoice(): void
     {
