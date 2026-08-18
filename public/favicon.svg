@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="50%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="sparkleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#818cf8" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Squircle Base -->
+  <rect width="64" height="64" rx="18" fill="url(#bgGrad)" />
+  <rect x="1" y="1" width="62" height="62" rx="17" stroke="#3b82f6" stroke-width="1.5" stroke-opacity="0.4" fill="none" />
+
+  <!-- AI Sourcing Hexagon / Box Cube Silhouette -->
+  <path d="M32 14 L48 23 L48 41 L32 50 L16 41 L16 23 Z" stroke="#60a5fa" stroke-width="2" stroke-linejoin="round" fill="#1e293b" fill-opacity="0.6" />
+  
+  <!-- Cube Inner Seams -->
+  <path d="M32 32 L48 23" stroke="#60a5fa" stroke-width="1.5" stroke-opacity="0.7" />
+  <path d="M32 32 L16 23" stroke="#60a5fa" stroke-width="1.5" stroke-opacity="0.7" />
+  <path d="M32 32 L32 50" stroke="#60a5fa" stroke-width="2" stroke-opacity="0.9" />
+
+  <!-- 4-Point AI Sparkle Center -->
+  <path d="M32 20 C32 26 34 28 40 28 C34 28 32 30 32 36 C32 30 30 28 24 28 C30 28 32 26 32 20 Z" fill="url(#sparkleGrad)" filter="url(#glow)" />
+  
+  <!-- Small Star Sparkle -->
+  <circle cx="44" cy="18" r="2" fill="#38bdf8" />
+</svg>
