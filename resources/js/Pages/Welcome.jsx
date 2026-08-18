@@ -31,9 +31,12 @@ import {
 } from 'lucide-react';
 import Footer from '@/Components/Footer';
 
+import BrandLogo from '@/Components/BrandLogo';
+
 export default function Welcome({ company }) {
     const { auth } = usePage().props;
     const user = auth.user;
+
 
     // Interactive ROI Calculator State
     const sampleProducts = [
@@ -154,18 +157,8 @@ export default function Welcome({ company }) {
             {/* Header / Navbar */}
             <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/25">
-                            <Sparkles className="w-5 h-5" />
-                        </div>
-                        <div className="flex flex-col">
-                            <span className="text-base font-extrabold tracking-tight text-white flex items-center gap-1.5">
-                                TakeYourGoods
-                                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-500 text-white uppercase">AI</span>
-                            </span>
-                            <span className="text-[10px] text-slate-400 -mt-1 font-medium hidden sm:inline">Autonomous Sourcing Agent</span>
-                        </div>
-                    </div>
+                    <BrandLogo href="/" showTagline={true} size="md" />
+
 
                     <div className="flex items-center space-x-4">
                         {user ? (

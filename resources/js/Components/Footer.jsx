@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { ShieldCheck, Building2, Mail, Sparkles, Lock, MapPin } from 'lucide-react';
+import BrandLogo from '@/Components/BrandLogo';
 
 export default function Footer() {
     const { company } = usePage().props;
@@ -17,14 +18,8 @@ export default function Footer() {
                     
                     {/* Column 1: Brand & Slogan */}
                     <div className="space-y-3 md:col-span-1">
-                        <div className="flex items-center space-x-2">
-                            <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center text-white">
-                                <Sparkles className="w-4 h-4" />
-                            </div>
-                            <span className="font-extrabold text-white text-base">
-                                TakeYourGoods <span className="text-blue-500 text-xs">AI</span>
-                            </span>
-                        </div>
+                        <BrandLogo href="/" size="sm" />
+
                         <p className="text-slate-400 text-xs leading-relaxed">
                             Autonomous B2B AI Sourcing Agent. Helping Amazon &amp; Shopify e-commerce brands bypass intermediaries and connect directly to verified tier-1 global manufacturers.
                         </p>

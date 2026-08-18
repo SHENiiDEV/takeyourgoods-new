@@ -14,6 +14,7 @@ import {
     Wallet
 } from 'lucide-react';
 import TopUpModal from '@/Components/TopUpModal';
+import BrandLogo from '@/Components/BrandLogo';
 
 export default function Navbar() {
     const { auth, url } = usePage().props;
@@ -32,18 +33,8 @@ export default function Navbar() {
                         
                         {/* Left: Brand Logo & Main Nav */}
                         <div className="flex items-center space-x-8">
-                            <Link href={route('dashboard')} className="flex items-center space-x-2.5 group">
-                                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
-                                    <Sparkles className="w-5 h-5" />
-                                </div>
-                                <div className="flex flex-col">
-                                    <span className="text-base font-extrabold tracking-tight text-white flex items-center gap-1.5">
-                                        TakeYourGoods
-                                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-500 text-white uppercase tracking-wider">AI</span>
-                                    </span>
-                                    <span className="text-[10px] text-slate-400 -mt-1 font-medium hidden sm:inline">Autonomous Sourcing Agent</span>
-                                </div>
-                            </Link>
+                            <BrandLogo href={route('dashboard')} showTagline={true} size="md" />
+
 
                             <nav className="hidden md:flex items-center space-x-1">
                                 <Link
