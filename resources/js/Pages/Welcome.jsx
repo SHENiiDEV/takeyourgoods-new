@@ -32,11 +32,15 @@ import {
 import Footer from '@/Components/Footer';
 
 import BrandLogo from '@/Components/BrandLogo';
+import OfflineBanner from '@/Components/OfflineBanner';
+import CookieConsent from '@/Components/CookieConsent';
+import CurrencySwitcher from '@/Components/CurrencySwitcher';
+import { useCurrency } from '@/Contexts/CurrencyContext';
 
 export default function Welcome({ company }) {
     const { auth } = usePage().props;
     const user = auth.user;
-
+    const { format, currency } = useCurrency();
 
     // Interactive ROI Calculator State
     const sampleProducts = [
@@ -45,6 +49,7 @@ export default function Welcome({ company }) {
         { name: 'Ergonomic 3D Mesh Lumbar Chair', category: 'Furniture & Living', defaultExw: 42.00, defaultRetail: 189.00, hsCode: '9401.30' },
         { name: 'Active Noise-Cancelling Bluetooth Earbuds', category: 'Audio Gear', defaultExw: 12.20, defaultRetail: 59.00, hsCode: '8518.30' },
     ];
+
 
     const [selectedProductIdx, setSelectedProductIdx] = useState(0);
     const [batchQuantity, setBatchQuantity] = useState(2500);
@@ -153,27 +158,30 @@ export default function Welcome({ company }) {
     return (
         <div className="min-h-screen flex flex-col bg-[#070b14] text-slate-100 selection:bg-blue-600 selection:text-white font-sans">
             <Head title="TakeYourGoods AI - Autonomous B2B Sourcing Agent" />
+            <OfflineBanner />
 
             {/* Header / Navbar */}
             <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                     <BrandLogo href="/" showTagline={true} size="md" />
 
+                    <div className="flex items-center space-x-3 sm:space-x-4">
+                        <CurrencySwitcher variant="inline" />
 
-                    <div className="flex items-center space-x-4">
                         {user ? (
                             <Link
                                 href={route('dashboard')}
                                 className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-lg shadow-blue-500/20 transition-all"
                             >
                                 <Layers className="w-4 h-4" />
-                                <span>Go to Dashboard</span>
+                                <span className="hidden sm:inline">Go to Dashboard</span>
+                                <span className="sm:hidden">Dashboard</span>
                             </Link>
                         ) : (
                             <>
                                 <Link
                                     href={route('login')}
-                                    className="text-xs font-semibold text-slate-300 hover:text-white transition-colors px-3 py-2"
+                                    className="text-xs font-semibold text-slate-300 hover:text-white transition-colors px-2 sm:px-3 py-2"
                                 >
                                     Sign In
                                 </Link>
@@ -234,6 +242,7 @@ export default function Welcome({ company }) {
                             <span>Try Interactive ROI Simulator</span>
                         </a>
                     </div>
+
 
                     {/* Trust Indicators */}
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto mt-16 pt-8 border-t border-slate-800/80 text-left">
@@ -303,8 +312,9 @@ export default function Welcome({ company }) {
                                                 <div className="font-semibold text-slate-200">{p.name}</div>
                                                 <div className="text-[10px] text-slate-500 font-mono">HS Code: {p.hsCode} &bull; {p.category}</div>
                                             </div>
-                                            <span className="font-mono text-blue-400 font-bold">€{p.defaultExw} EXW</span>
+                                            <span className="font-mono text-blue-400 font-bold">{format(p.defaultExw)} EXW</span>
                                         </button>
+
                                     ))}
                                 </div>
                             </div>
@@ -335,7 +345,7 @@ export default function Welcome({ company }) {
                             <div className="space-y-2">
                                 <div className="flex justify-between text-xs font-semibold">
                                     <span className="text-slate-300">Target Retail Selling Price (RRP):</span>
-                                    <span className="text-emerald-400 font-mono font-bold text-sm">€{retailPrice.toFixed(2)}</span>
+                                    <span className="text-emerald-400 font-mono font-bold text-sm">{format(retailPrice, 2)}</span>
                                 </div>
                                 <input
                                     type="range"
@@ -377,15 +387,15 @@ export default function Welcome({ company }) {
                                     <div className="space-y-1 text-[11px] text-slate-400">
                                         <div className="flex justify-between">
                                             <span>Quoted EXW:</span>
-                                            <span className="font-mono text-white">€{middlemanExw}</span>
+                                            <span className="font-mono text-white">{format(middlemanExw, 2)}</span>
                                         </div>
                                         <div className="flex justify-between">
                                             <span>Est. Landed:</span>
-                                            <span className="font-mono text-rose-300 font-bold">€{landedCostMiddleman}</span>
+                                            <span className="font-mono text-rose-300 font-bold">{format(landedCostMiddleman, 2)}</span>
                                         </div>
                                         <div className="flex justify-between pt-2 border-t border-slate-800">
                                             <span>Total Batch Cost:</span>
-                                            <span className="font-mono text-white font-bold">€{totalCostMiddleman.toLocaleString()}</span>
+                                            <span className="font-mono text-white font-bold">{format(totalCostMiddleman, 0)}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -398,15 +408,15 @@ export default function Welcome({ company }) {
                                     <div className="space-y-1 text-[11px] text-slate-300">
                                         <div className="flex justify-between">
                                             <span>Audited EXW:</span>
-                                            <span className="font-mono text-white font-bold">€{factoryExw.toFixed(2)}</span>
+                                            <span className="font-mono text-white font-bold">{format(factoryExw, 2)}</span>
                                         </div>
                                         <div className="flex justify-between">
                                             <span>Est. Landed:</span>
-                                            <span className="font-mono text-emerald-400 font-bold">€{landedCostDirect}</span>
+                                            <span className="font-mono text-emerald-400 font-bold">{format(landedCostDirect, 2)}</span>
                                         </div>
                                         <div className="flex justify-between pt-2 border-t border-slate-800">
                                             <span>Total Batch Cost:</span>
-                                            <span className="font-mono text-emerald-400 font-bold">€{totalCostDirect.toLocaleString()}</span>
+                                            <span className="font-mono text-emerald-400 font-bold">{format(totalCostDirect, 0)}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -418,7 +428,7 @@ export default function Welcome({ company }) {
                                 <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 text-center">
                                     <div className="text-[10px] text-slate-400 uppercase font-semibold">Your Batch Savings</div>
                                     <div className="text-2xl font-extrabold text-emerald-400 font-mono mt-1">
-                                        +€{batchSavings.toLocaleString()}
+                                        +{format(batchSavings, 0)}
                                     </div>
                                     <div className="text-[10px] text-slate-500 mt-0.5">Kept in your pocket</div>
                                 </div>
@@ -426,9 +436,9 @@ export default function Welcome({ company }) {
                                 <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 text-center">
                                     <div className="text-[10px] text-slate-400 uppercase font-semibold">Net Profit Forecast</div>
                                     <div className="text-2xl font-extrabold text-blue-400 font-mono mt-1">
-                                        €{profitDirect.toLocaleString()}
+                                        {format(profitDirect, 0)}
                                     </div>
-                                    <div className="text-[10px] text-slate-500 mt-0.5">At €{retailPrice} RRP</div>
+                                    <div className="text-[10px] text-slate-500 mt-0.5">At {format(retailPrice, 2)} RRP</div>
                                 </div>
 
                                 <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 text-center col-span-2 sm:col-span-1">
@@ -495,7 +505,6 @@ export default function Welcome({ company }) {
                             </p>
                         </div>
 
-
                         {/* Step 3 */}
                         <div className="p-8 rounded-3xl bg-slate-900/60 border border-slate-800 relative space-y-4">
                             <div className="w-12 h-12 rounded-2xl bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-extrabold text-lg">
@@ -521,7 +530,7 @@ export default function Welcome({ company }) {
                             <Lock className="w-3.5 h-3.5" /> High-Ticket Transparent Pricing
                         </div>
                         <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                            One Report Can Save You €20,000+ In Tooling &amp; Middleman Margins
+                            One Report Can Save You {format(20000, 0)}+ In Tooling &amp; Middleman Margins
                         </h2>
                         <p className="text-sm sm:text-base text-slate-400 mt-3">
                             No monthly subscriptions. Top up your wallet in EUR and generate reports on demand with official UK B2B Tax Invoices.
@@ -550,7 +559,7 @@ export default function Welcome({ company }) {
 
                                 <div>
                                     <div className="flex items-baseline gap-1 mt-2">
-                                        <span className="text-4xl font-extrabold text-white">{tier.currency}{tier.price}</span>
+                                        <span className="text-4xl font-extrabold text-white">{format(tier.price, 0)}</span>
                                         <span className="text-xs text-slate-400 font-semibold">/ report</span>
                                     </div>
                                     <h3 className="text-xl font-bold text-white mt-2">{tier.name}</h3>
@@ -576,7 +585,7 @@ export default function Welcome({ company }) {
                                                 : 'bg-slate-800 hover:bg-slate-700 text-white border border-slate-700'
                                         }`}
                                     >
-                                        <span>{tier.ctaText}</span>
+                                        <span>{tier.id === 'starter' ? `Start with Starter (${format(tier.price, 0)})` : tier.id === 'pro' ? `Generate Pro Report (${format(tier.price, 0)})` : `Launch Enterprise Pack (${format(tier.price, 0)})`}</span>
                                         <ArrowRight className="w-4 h-4" />
                                     </Link>
                                     <div className="text-center text-[10px] text-slate-500 mt-2">
@@ -627,7 +636,10 @@ export default function Welcome({ company }) {
                 </div>
             </section>
 
+            <CurrencySwitcher variant="floating" />
+            <CookieConsent />
             <Footer />
         </div>
     );
 }
+

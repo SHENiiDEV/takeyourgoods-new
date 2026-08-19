@@ -2,6 +2,9 @@ import React from 'react';
 import { usePage } from '@inertiajs/react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
+import OfflineBanner from '@/Components/OfflineBanner';
+import CookieConsent from '@/Components/CookieConsent';
+import CurrencySwitcher from '@/Components/CurrencySwitcher';
 import { CheckCircle2, AlertCircle } from 'lucide-react';
 
 export default function AuthenticatedLayout({ header, children }) {
@@ -9,6 +12,7 @@ export default function AuthenticatedLayout({ header, children }) {
 
     return (
         <div className="min-h-screen flex flex-col bg-[#0b0f19] text-slate-100 selection:bg-blue-600 selection:text-white">
+            <OfflineBanner />
             <Navbar />
 
             {/* Flash Messages */}
@@ -44,8 +48,11 @@ export default function AuthenticatedLayout({ header, children }) {
                 {children}
             </main>
 
+            <CurrencySwitcher variant="floating" />
+            <CookieConsent />
             <Footer />
         </div>
     );
 }
+
 
