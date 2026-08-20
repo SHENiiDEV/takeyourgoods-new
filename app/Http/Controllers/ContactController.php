@@ -55,7 +55,7 @@ class ContactController extends Controller
             Log::error('Could not send contact message email: ' . $e->getMessage());
         }
 
-        return redirect()->back()->with('success', 'Your inquiry has been received! Our trade desk will respond within 4 business hours.');
+        return redirect()->back()->with('success', 'Your inquiry has been received! Our trade desk will respond within 24–48 business hours.');
     }
 
     /**

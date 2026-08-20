@@ -146,7 +146,7 @@ export default function Contact({ company }) {
                             Get in Touch with Our Procurement Specialists
                         </h1>
                         <p className="text-sm text-slate-400">
-                            Have questions regarding custom OEM tooling, high-volume production batches, or enterprise API access? We respond within 4 business hours.
+                            Have questions regarding custom OEM tooling, high-volume production batches, or enterprise API access? We respond within 24–48 business hours.
                         </p>
                     </div>
 
@@ -159,7 +159,7 @@ export default function Contact({ company }) {
                             {(flash?.success || recentlySuccessful) && (
                                 <div className="flex items-center gap-3 p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-xs font-semibold animate-in fade-in duration-200">
                                     <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />
-                                    <span>{flash?.success || 'Your inquiry has been successfully transmitted! Our trade desk will reply shortly.'}</span>
+                                    <span>{flash?.success || 'Your inquiry has been successfully transmitted! Our trade desk will reply within 24–48 business hours.'}</span>
                                 </div>
                             )}
 
@@ -254,7 +254,7 @@ export default function Contact({ company }) {
                                     </div>
                                 </div>
                                 <p className="text-xs text-slate-400 leading-relaxed">
-                                    Monitored 24/7 by our London and Shenzhen supply chain operations desk. Average response time: &lt; 4 hours.
+                                    Monitored by our London and Shenzhen supply chain operations desk. Average response SLA: 24–48 hours.
                                 </p>
                             </div>
 
@@ -280,9 +280,10 @@ export default function Contact({ company }) {
                             <div className="p-5 rounded-2xl bg-emerald-950/20 border border-emerald-500/30 flex items-center gap-3 text-xs text-emerald-300">
                                 <ShieldCheck className="w-5 h-5 text-emerald-400 flex-shrink-0" />
                                 <span>
-                                    <strong>Guaranteed SLA:</strong> All support tickets received through this portal are logged directly into our engineering and trade queue.
+                                    <strong>Guaranteed SLA:</strong> All support tickets received through this portal are logged directly into our engineering and trade queue with a 24–48h response commitment.
                                 </span>
                             </div>
+
 
                         </div>
 
