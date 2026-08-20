@@ -27,8 +27,11 @@ import {
     Factory,
     Radio,
     Terminal,
-    Target
+    Target,
+    Menu,
+    X
 } from 'lucide-react';
+
 import Footer from '@/Components/Footer';
 
 import BrandLogo from '@/Components/BrandLogo';
@@ -155,33 +158,42 @@ export default function Welcome({ company }) {
         }
     ];
 
+    const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+
     return (
         <div className="min-h-screen flex flex-col bg-[#070b14] text-slate-100 selection:bg-blue-600 selection:text-white font-sans">
             <Head title="TakeYourGoods AI - Autonomous B2B Sourcing Agent" />
             <OfflineBanner />
 
             {/* Header / Navbar */}
-            <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md">
+            <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-md">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                     <BrandLogo href="/" showTagline={true} size="md" />
 
-                    <div className="flex items-center space-x-3 sm:space-x-4">
+                    {/* Desktop Navigation Links */}
+                    <nav className="hidden lg:flex items-center space-x-6 text-xs font-semibold text-slate-300">
+                        <a href="#roi-calculator" className="hover:text-blue-400 transition-colors">ROI Simulator</a>
+                        <a href="#pricing" className="hover:text-blue-400 transition-colors">Pricing</a>
+                        <Link href={route('terms')} className="hover:text-blue-400 transition-colors">Terms</Link>
+                        <Link href={route('privacy')} className="hover:text-blue-400 transition-colors">Privacy</Link>
+                    </nav>
+
+                    <div className="flex items-center space-x-2 sm:space-x-3">
                         <CurrencySwitcher variant="inline" />
 
                         {user ? (
                             <Link
                                 href={route('dashboard')}
-                                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-lg shadow-blue-500/20 transition-all"
+                                className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-lg shadow-blue-500/20 transition-all"
                             >
                                 <Layers className="w-4 h-4" />
-                                <span className="hidden sm:inline">Go to Dashboard</span>
-                                <span className="sm:hidden">Dashboard</span>
+                                <span>Go to Dashboard</span>
                             </Link>
                         ) : (
-                            <>
+                            <div className="hidden sm:flex items-center space-x-2">
                                 <Link
                                     href={route('login')}
-                                    className="text-xs font-semibold text-slate-300 hover:text-white transition-colors px-2 sm:px-3 py-2"
+                                    className="text-xs font-semibold text-slate-300 hover:text-white transition-colors px-2.5 py-2"
                                 >
                                     Sign In
                                 </Link>
@@ -192,11 +204,127 @@ export default function Welcome({ company }) {
                                     <span>Get Started</span>
                                     <ArrowRight className="w-3.5 h-3.5" />
                                 </Link>
-                            </>
+                            </div>
                         )}
+
+                        {/* Mobile Hamburger Button */}
+                        <button
+                            type="button"
+                            onClick={() => setIsMobileNavOpen(true)}
+                            className="lg:hidden p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+                            aria-label="Open mobile navigation"
+                        >
+                            <Menu className="w-5 h-5" />
+                        </button>
                     </div>
                 </div>
             </header>
+
+            {/* Mobile Slide-Over Drawer (Right side) */}
+            {isMobileNavOpen && (
+                <div className="fixed inset-0 z-50 lg:hidden animate-in fade-in duration-200">
+                    {/* Backdrop */}
+                    <div 
+                        className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm"
+                        onClick={() => setIsMobileNavOpen(false)}
+                    />
+
+                    {/* Drawer Panel */}
+                    <div className="fixed inset-y-0 right-0 w-[290px] max-w-[85vw] bg-slate-950/98 border-l border-slate-800/90 shadow-2xl p-6 flex flex-col justify-between z-50 animate-in slide-in-from-right duration-300 ease-out">
+                        
+                        <div className="space-y-6">
+                            {/* Header */}
+                            <div className="flex items-center justify-between pb-4 border-b border-slate-800/80">
+                                <BrandLogo href="/" size="sm" showTagline={false} />
+                                <button
+                                    type="button"
+                                    onClick={() => setIsMobileNavOpen(false)}
+                                    className="p-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                                >
+                                    <X className="w-5 h-5" />
+                                </button>
+                            </div>
+
+                            {/* Navigation Links */}
+                            <nav className="space-y-1.5 text-xs font-bold">
+                                <a
+                                    href="#roi-calculator"
+                                    onClick={() => setIsMobileNavOpen(false)}
+                                    className="flex items-center gap-3 px-3.5 py-3 rounded-xl text-slate-300 hover:bg-slate-900 hover:text-white transition-colors"
+                                >
+                                    <Calculator className="w-4 h-4 text-blue-400" />
+                                    <span>ROI &amp; Cost Simulator</span>
+                                </a>
+
+                                <a
+                                    href="#pricing"
+                                    onClick={() => setIsMobileNavOpen(false)}
+                                    className="flex items-center gap-3 px-3.5 py-3 rounded-xl text-slate-300 hover:bg-slate-900 hover:text-white transition-colors"
+                                >
+                                    <Lock className="w-4 h-4 text-indigo-400" />
+                                    <span>High-Ticket Pricing</span>
+                                </a>
+
+                                <Link
+                                    href={route('terms')}
+                                    onClick={() => setIsMobileNavOpen(false)}
+                                    className="flex items-center gap-3 px-3.5 py-3 rounded-xl text-slate-300 hover:bg-slate-900 hover:text-white transition-colors"
+                                >
+                                    <FileText className="w-4 h-4 text-slate-400" />
+                                    <span>Terms &amp; Conditions</span>
+                                </Link>
+
+                                <Link
+                                    href={route('privacy')}
+                                    onClick={() => setIsMobileNavOpen(false)}
+                                    className="flex items-center gap-3 px-3.5 py-3 rounded-xl text-slate-300 hover:bg-slate-900 hover:text-white transition-colors"
+                                >
+                                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                                    <span>Privacy Policy</span>
+                                </Link>
+                            </nav>
+                        </div>
+
+                        {/* Drawer Bottom Actions */}
+                        <div className="space-y-3 pt-6 border-t border-slate-800/80">
+                            {user ? (
+                                <Link
+                                    href={route('dashboard')}
+                                    onClick={() => setIsMobileNavOpen(false)}
+                                    className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-lg shadow-blue-500/25"
+                                >
+                                    <Layers className="w-4 h-4" />
+                                    <span>Go to Dashboard &rarr;</span>
+                                </Link>
+                            ) : (
+                                <>
+                                    <Link
+                                        href={route('register')}
+                                        onClick={() => setIsMobileNavOpen(false)}
+                                        className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg shadow-blue-500/25"
+                                    >
+                                        <Sparkles className="w-4 h-4" />
+                                        <span>Create B2B Account</span>
+                                    </Link>
+                                    <Link
+                                        href={route('login')}
+                                        onClick={() => setIsMobileNavOpen(false)}
+                                        className="w-full flex items-center justify-center py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white font-semibold text-xs border border-slate-800 transition-colors"
+                                    >
+                                        <span>Sign In</span>
+                                    </Link>
+                                </>
+                            )}
+
+                            <div className="text-center text-[10px] text-slate-500 pt-1">
+                                TakeYourGoods AI &bull; COLCHESTER LTD
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            )}
+
 
             {/* Hero Section */}
             <section className="relative overflow-hidden pt-16 pb-20 lg:pt-24 lg:pb-28">
