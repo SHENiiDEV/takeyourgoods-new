@@ -172,10 +172,12 @@ export default function Welcome({ company }) {
 
                     {/* Desktop Navigation Links */}
                     <nav className="hidden lg:flex items-center space-x-6 text-xs font-semibold text-slate-300">
+                        <Link href={route('how-it-works')} className="hover:text-blue-400 transition-colors">How It Works</Link>
+                        <Link href={route('about')} className="hover:text-blue-400 transition-colors">About Us</Link>
                         <a href="#roi-calculator" className="hover:text-blue-400 transition-colors">ROI Simulator</a>
                         <a href="#pricing" className="hover:text-blue-400 transition-colors">Pricing</a>
-                        <Link href={route('terms')} className="hover:text-blue-400 transition-colors">Terms</Link>
-                        <Link href={route('privacy')} className="hover:text-blue-400 transition-colors">Privacy</Link>
+                        <Link href={route('support')} className="hover:text-blue-400 transition-colors">Support</Link>
+                        <Link href={route('contact')} className="hover:text-blue-400 transition-colors">Contact</Link>
                     </nav>
 
                     <div className="flex items-center space-x-2 sm:space-x-3">
@@ -247,12 +249,30 @@ export default function Welcome({ company }) {
 
                             {/* Navigation Links */}
                             <nav className="space-y-1.5 text-xs font-bold">
+                                <Link
+                                    href={route('how-it-works')}
+                                    onClick={() => setIsMobileNavOpen(false)}
+                                    className="flex items-center gap-3 px-3.5 py-3 rounded-xl text-slate-300 hover:bg-slate-900 hover:text-white transition-colors"
+                                >
+                                    <Zap className="w-4 h-4 text-blue-400" />
+                                    <span>How It Works</span>
+                                </Link>
+
+                                <Link
+                                    href={route('about')}
+                                    onClick={() => setIsMobileNavOpen(false)}
+                                    className="flex items-center gap-3 px-3.5 py-3 rounded-xl text-slate-300 hover:bg-slate-900 hover:text-white transition-colors"
+                                >
+                                    <Building2 className="w-4 h-4 text-indigo-400" />
+                                    <span>About Us</span>
+                                </Link>
+
                                 <a
                                     href="#roi-calculator"
                                     onClick={() => setIsMobileNavOpen(false)}
                                     className="flex items-center gap-3 px-3.5 py-3 rounded-xl text-slate-300 hover:bg-slate-900 hover:text-white transition-colors"
                                 >
-                                    <Calculator className="w-4 h-4 text-blue-400" />
+                                    <Calculator className="w-4 h-4 text-emerald-400" />
                                     <span>ROI &amp; Cost Simulator</span>
                                 </a>
 
@@ -261,17 +281,26 @@ export default function Welcome({ company }) {
                                     onClick={() => setIsMobileNavOpen(false)}
                                     className="flex items-center gap-3 px-3.5 py-3 rounded-xl text-slate-300 hover:bg-slate-900 hover:text-white transition-colors"
                                 >
-                                    <Lock className="w-4 h-4 text-indigo-400" />
-                                    <span>High-Ticket Pricing</span>
+                                    <Lock className="w-4 h-4 text-purple-400" />
+                                    <span>Pricing Tiers</span>
                                 </a>
 
                                 <Link
-                                    href={route('terms')}
+                                    href={route('support')}
                                     onClick={() => setIsMobileNavOpen(false)}
                                     className="flex items-center gap-3 px-3.5 py-3 rounded-xl text-slate-300 hover:bg-slate-900 hover:text-white transition-colors"
                                 >
-                                    <FileText className="w-4 h-4 text-slate-400" />
-                                    <span>Terms &amp; Conditions</span>
+                                    <HelpCircle className="w-4 h-4 text-blue-400" />
+                                    <span>Support &amp; Help Desk</span>
+                                </Link>
+
+                                <Link
+                                    href={route('contact')}
+                                    onClick={() => setIsMobileNavOpen(false)}
+                                    className="flex items-center gap-3 px-3.5 py-3 rounded-xl text-slate-300 hover:bg-slate-900 hover:text-white transition-colors"
+                                >
+                                    <Mail className="w-4 h-4 text-pink-400" />
+                                    <span>Contact Us</span>
                                 </Link>
 
                                 <Link
@@ -284,6 +313,8 @@ export default function Welcome({ company }) {
                                 </Link>
                             </nav>
                         </div>
+
+
 
                         {/* Drawer Bottom Actions */}
                         <div className="space-y-3 pt-6 border-t border-slate-800/80">

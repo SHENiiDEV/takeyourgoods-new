@@ -31,16 +31,26 @@ export default function Footer() {
 
                     {/* Column 2: Quick Links */}
                     <div>
-                        <h4 className="font-bold text-white uppercase text-[11px] tracking-wider mb-3">Platform</h4>
+                        <h4 className="font-bold text-white uppercase text-[11px] tracking-wider mb-3">Platform &amp; Help</h4>
                         <ul className="space-y-2 text-xs">
                             <li>
-                                <Link href={route('dashboard')} className="hover:text-blue-400 transition-colors">
-                                    Sourcing Dashboard
+                                <Link href={route('how-it-works')} className="hover:text-blue-400 transition-colors">
+                                    How It Works
                                 </Link>
                             </li>
                             <li>
-                                <Link href={route('reports.create')} className="hover:text-blue-400 transition-colors">
-                                    New Sourcing Report
+                                <Link href={route('about')} className="hover:text-blue-400 transition-colors">
+                                    About Us
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href={route('support')} className="hover:text-blue-400 transition-colors">
+                                    Support &amp; Help Desk
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href={route('contact')} className="hover:text-blue-400 transition-colors">
+                                    Contact Us
                                 </Link>
                             </li>
                             <li>
@@ -50,6 +60,7 @@ export default function Footer() {
                             </li>
                         </ul>
                     </div>
+
 
                     {/* Column 3: Legal & Compliance */}
                     <div>

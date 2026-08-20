@@ -181,4 +181,27 @@ class TakeYourGoodsTest extends TestCase
         $this->get(route('privacy'))->assertStatus(200);
         $this->get(route('refund'))->assertStatus(200);
     }
+
+    public function test_public_pages_and_contact_form(): void
+    {
+        Mail::fake();
+
+        $this->get(route('how-it-works'))->assertStatus(200);
+        $this->get(route('support'))->assertStatus(200);
+        $this->get(route('about'))->assertStatus(200);
+        $this->get(route('contact'))->assertStatus(200);
+
+        $response = $this->post(route('contact.send'), [
+            'name' => 'Alexander Vance',
+            'email' => 'alex@vance-logistics.co.uk',
+            'subject' => 'Enterprise Custom Sourcing Inquiry',
+            'message' => 'We are looking to source 50,000 units of custom ergonomic mechanical keyboards into UK and US warehouses.',
+        ]);
+
+        $response->assertSessionHas('success');
+        Mail::assertSent(\App\Mail\ContactMessageMail::class, function ($mail) {
+            return $mail->name === 'Alexander Vance' && $mail->email === 'alex@vance-logistics.co.uk';
+        });
+    }
 }
+

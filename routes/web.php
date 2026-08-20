@@ -7,16 +7,23 @@ use App\Http\Controllers\SourcingReportController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-// Public Landing & Legal Pages
+// Public Landing, Info & Legal Pages
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'company' => config('services.company'),
     ]);
 })->name('home');
 
+Route::get('/how-it-works', [\App\Http\Controllers\ContactController::class, 'howItWorks'])->name('how-it-works');
+Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'contact'])->name('contact');
+Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'send'])->name('contact.send');
+Route::get('/support', [\App\Http\Controllers\ContactController::class, 'support'])->name('support');
+Route::get('/about', [\App\Http\Controllers\ContactController::class, 'about'])->name('about');
+
 Route::get('/terms', [LegalController::class, 'terms'])->name('terms');
 Route::get('/privacy', [LegalController::class, 'privacy'])->name('privacy');
 Route::get('/refund', [LegalController::class, 'refund'])->name('refund');
+
 
 // Authenticated Routes
 Route::middleware(['auth'])->group(function () {
