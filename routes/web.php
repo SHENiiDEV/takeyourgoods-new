@@ -31,6 +31,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/billing', [BillingController::class, 'index'])->name('billing.index');
     Route::post('/billing/top-up', [BillingController::class, 'topUp'])->name('billing.top-up');
     Route::get('/invoices/{invoice}/download', [BillingController::class, 'downloadInvoice'])->name('invoices.download');
+    Route::get('/wallet/invoice/{transaction}', [BillingController::class, 'downloadInvoiceByTransaction'])->name('wallet.invoice');
+
 
     // User Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

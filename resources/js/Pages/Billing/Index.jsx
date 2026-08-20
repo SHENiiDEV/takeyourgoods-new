@@ -188,18 +188,16 @@ export default function Index({ wallet_balance, transactions, user_billing, comp
                                                 </td>
 
                                                 <td className="py-4 px-4 text-right">
-                                                    {txn.invoice ? (
-                                                        <a
-                                                            href={route('invoices.download', txn.invoice.id)}
-                                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white text-xs font-bold border border-blue-500/30 transition-all"
-                                                        >
-                                                            <Download className="w-3 h-3" />
-                                                            <span>PDF Invoice</span>
-                                                        </a>
-                                                    ) : (
-                                                        <span className="text-slate-500 text-[11px]">-</span>
-                                                    )}
+                                                    <a
+                                                        href={route('wallet.invoice', txn.id)}
+                                                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white text-xs font-bold border border-blue-500/30 transition-all"
+                                                        title="Download Official B2B Tax Receipt"
+                                                    >
+                                                        <Download className="w-3 h-3" />
+                                                        <span>Invoice (PDF)</span>
+                                                    </a>
                                                 </td>
+
                                             </tr>
                                         );
                                     })}

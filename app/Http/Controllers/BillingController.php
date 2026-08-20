@@ -100,10 +100,47 @@ class BillingController extends Controller
         }
 
         // On-the-fly regeneration if file not cached
-        $pdf = Pdf::loadView('invoices.pdf', [
+        $viewName = view()->exists('pdf.wallet_invoice') ? 'pdf.wallet_invoice' : 'invoices.pdf';
+        $pdf = Pdf::loadView($viewName, [
             'invoice' => $invoice,
+            'transaction' => $invoice->transaction,
+            'user' => $invoice->user ?? Auth::user(),
+            'invoiceNumber' => $invoice->invoice_number,
         ])->setPaper('a4', 'portrait');
 
         return $pdf->download($invoice->invoice_number . '.pdf');
     }
+
+    /**
+     * Download invoice by transaction model / ID.
+     */
+    public function downloadInvoiceByTransaction(Request $request, \App\Models\Transaction $transaction)
+    {
+        // Authorization check
+        if ($transaction->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized access to transaction invoice.');
+        }
+
+        $invoice = $transaction->invoice;
+        $ref = $invoice?->invoice_number ?? $transaction->reference_number ?? ('INV-' . $transaction->id);
+
+        if ($invoice && $invoice->pdf_path && Storage::disk('public')->exists($invoice->pdf_path)) {
+            return response()->download(
+                Storage::disk('public')->path($invoice->pdf_path),
+                "Invoice_{$ref}.pdf",
+                ['Content-Type' => 'application/pdf']
+            );
+        }
+
+        $viewName = view()->exists('pdf.wallet_invoice') ? 'pdf.wallet_invoice' : 'invoices.pdf';
+        $pdf = Pdf::loadView($viewName, [
+            'transaction' => $transaction,
+            'user' => $transaction->user ?? Auth::user(),
+            'invoice' => $invoice,
+            'invoiceNumber' => $ref,
+        ])->setPaper('a4', 'portrait');
+
+        return $pdf->download("Invoice_{$ref}.pdf");
+    }
 }
+

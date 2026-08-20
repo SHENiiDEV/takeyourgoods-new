@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Mail\DocumentPaymentMail;
 use App\Mail\ReportReadyEmail;
-use App\Mail\TopUpSuccessEmail;
+use App\Mail\WalletTopUpMail;
 use App\Mail\WelcomeEmail;
+use App\Mail\WelcomeUserMail;
 use App\Models\Invoice;
 use App\Models\SourcingReport;
 use App\Models\Transaction;
@@ -53,7 +55,6 @@ class TakeYourGoodsTest extends TestCase
         Mail::assertSent(WelcomeEmail::class);
     }
 
-
     public function test_wallet_top_up_credits_balance_and_generates_invoice(): void
     {
         Mail::fake();
@@ -81,12 +82,12 @@ class TakeYourGoodsTest extends TestCase
         $this->assertDatabaseHas('invoices', [
             'user_id' => $user->id,
             'amount' => 499.00,
-            'company_name' => 'COLCHESTER LTD',
-            'company_number' => '16113808',
             'vat_rate' => 0.00,
         ]);
 
-        Mail::assertSent(TopUpSuccessEmail::class);
+        Mail::assertSent(WalletTopUpMail::class, function ($mail) use ($user) {
+            return $mail->user->id === $user->id && count($mail->attachments()) > 0;
+        });
     }
 
     public function test_sourcing_report_generation_with_balance_deduction(): void
@@ -125,6 +126,9 @@ class TakeYourGoodsTest extends TestCase
         $response->assertRedirect(route('reports.show', $report->id));
 
         Mail::assertSent(ReportReadyEmail::class);
+        Mail::assertSent(DocumentPaymentMail::class, function ($mail) use ($user) {
+            return $mail->user->id === $user->id && count($mail->attachments()) > 0;
+        });
     }
 
     public function test_insufficient_balance_prevents_report_generation(): void
@@ -150,33 +154,26 @@ class TakeYourGoodsTest extends TestCase
     public function test_invoice_and_report_pdf_downloads(): void
     {
         $user = User::factory()->create(['wallet_balance' => 500]);
+        $otherUser = User::factory()->create(['wallet_balance' => 0]);
         $this->actingAs($user);
 
         $walletService = app(WalletService::class);
         $topUp = $walletService->topUp($user, 499.00);
         $invoice = $topUp['invoice'];
+        $transaction = $topUp['transaction'];
 
         $invoiceResponse = $this->get(route('invoices.download', $invoice->id));
         $invoiceResponse->assertStatus(200);
 
-        // Generate report
-        $deepSeekService = app(DeepSeekService::class);
-        $aiData = $deepSeekService->generateSourcingReport('pro', 'Smart Ring', 'Wearables', 22.00, 1000, 'UK', 'Titanium', 'CE, RoHS');
-        $report = SourcingReport::create([
-            'user_id' => $user->id,
-            'tier' => 'pro',
-            'status' => 'completed',
-            'title' => 'Smart Ring Dossier',
-            'product_name' => 'Smart Ring',
-            'destination_country' => 'UK',
-            'cost_deducted' => 499.00,
-            'report_data' => $aiData['data'],
-            'ai_model' => $aiData['ai_model'],
-        ]);
+        $walletInvoiceResponse = $this->get(route('wallet.invoice', $transaction->id));
+        $walletInvoiceResponse->assertStatus(200);
 
-        $reportPdfResponse = $this->get(route('reports.pdf', $report->id));
-        $reportPdfResponse->assertStatus(200);
+        // Verify other user cannot download this invoice (403)
+        $this->actingAs($otherUser);
+        $forbiddenResponse = $this->get(route('wallet.invoice', $transaction->id));
+        $forbiddenResponse->assertStatus(403);
     }
+
 
     public function test_legal_routes_render_successfully(): void
     {

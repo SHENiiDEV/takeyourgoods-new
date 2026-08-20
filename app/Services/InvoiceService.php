@@ -27,7 +27,7 @@ class InvoiceService
         $companyName = $companyConfig['name'] ?? 'COLCHESTER LTD';
         $companyNumber = $companyConfig['number'] ?? '16113808';
         $companyAddress = $companyConfig['address'] ?? 'Dept 6898 126 East Ferry Road, Canary Wharf, London, England, E14 9FP';
-        $companyEmail = $companyConfig['email'] ?? 'info@takeyoursgoods.co.uk';
+        $companyEmail = $companyConfig['email'] ?? 'info@takeyourgoods.co.uk';
 
         $invoice = Invoice::create([
             'user_id' => $user->id,
@@ -41,7 +41,7 @@ class InvoiceService
             'company_number' => $companyNumber,
             'company_address' => $companyAddress,
             'company_email' => $companyEmail,
-            'client_name' => $user->name,
+            'client_name' => $user->name . ($user->surname ? ' ' . $user->surname : ''),
             'client_company' => $user->company_name,
             'client_vat' => $user->vat_number,
             'client_email' => $user->email,
@@ -54,8 +54,12 @@ class InvoiceService
         // Generate PDF
         $pdfContent = null;
         try {
-            $pdf = Pdf::loadView('invoices.pdf', [
+            $viewName = view()->exists('pdf.wallet_invoice') ? 'pdf.wallet_invoice' : 'invoices.pdf';
+            $pdf = Pdf::loadView($viewName, [
                 'invoice' => $invoice,
+                'transaction' => $transaction,
+                'user' => $user,
+                'invoiceNumber' => $invoiceNumber,
             ])->setPaper('a4', 'portrait');
 
             $pdfContent = $pdf->output();
@@ -66,6 +70,7 @@ class InvoiceService
         } catch (\Throwable $e) {
             Log::error('Invoice PDF generation error: ' . $e->getMessage());
         }
+
 
         return [
             'invoice' => $invoice,

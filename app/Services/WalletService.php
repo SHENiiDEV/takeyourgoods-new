@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-use App\Mail\TopUpSuccessEmail;
+use App\Mail\DocumentPaymentMail;
+use App\Mail\WalletTopUpMail;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -66,7 +67,7 @@ class WalletService
         // Send Email confirmation with PDF invoice attached
         try {
             Mail::to($user->email)->send(
-                new TopUpSuccessEmail(
+                new WalletTopUpMail(
                     $result['user'],
                     $result['transaction'],
                     $result['invoice'],
@@ -81,7 +82,7 @@ class WalletService
     }
 
     /**
-     * Deduct funds from user balance for a sourcing report or service.
+     * Deduct funds from user balance for a sourcing report or service, generate invoice, and dispatch DocumentPaymentMail.
      */
     public function deduct(User $user, float $amount, string $serviceName, array $metadata = []): Transaction
     {
@@ -91,7 +92,7 @@ class WalletService
 
         $reference = 'TYG-DED-' . date('Y') . '-' . strtoupper(Str::random(6));
 
-        return DB::transaction(function () use ($user, $amount, $serviceName, $reference, $metadata) {
+        $result = DB::transaction(function () use ($user, $amount, $serviceName, $reference, $metadata) {
             $lockedUser = User::where('id', $user->id)->lockForUpdate()->firstOrFail();
 
             if ((float)$lockedUser->wallet_balance < $amount) {
@@ -101,7 +102,7 @@ class WalletService
             $lockedUser->wallet_balance = (float)$lockedUser->wallet_balance - $amount;
             $lockedUser->save();
 
-            return Transaction::create([
+            $transaction = Transaction::create([
                 'user_id' => $lockedUser->id,
                 'type' => 'deduction',
                 'amount' => $amount,
@@ -111,6 +112,37 @@ class WalletService
                 'status' => 'completed',
                 'metadata' => $metadata,
             ]);
+
+            $invoiceData = $this->invoiceService->generateInvoice($transaction, $lockedUser);
+
+            return [
+                'transaction' => $transaction,
+                'invoice' => $invoiceData['invoice'],
+                'pdf_content' => $invoiceData['pdf_content'],
+                'user' => $lockedUser,
+            ];
         });
+
+        // Send Email notification with PDF invoice attached
+        try {
+            $projectName = $metadata['product_name'] ?? ($metadata['project_name'] ?? null);
+            $projectUrl = isset($metadata['report_id']) ? url('/reports/' . $metadata['report_id']) : url('/dashboard');
+
+            Mail::to($user->email)->send(
+                new DocumentPaymentMail(
+                    $result['user'],
+                    $result['transaction'],
+                    $result['invoice'],
+                    $projectName,
+                    $projectUrl,
+                    $result['pdf_content']
+                )
+            );
+        } catch (\Throwable $e) {
+            Log::warning('Could not send document payment invoice email: ' . $e->getMessage());
+        }
+
+        return $result['transaction'];
     }
 }
+

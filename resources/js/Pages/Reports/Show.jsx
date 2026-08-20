@@ -59,6 +59,15 @@ export default function Show({ report, wallet_balance, company }) {
 
                     <div className="flex items-center space-x-3">
                         <a
+                            href={route('wallet.invoice', report.transaction_id || report.id)}
+                            className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold border border-slate-700 transition-colors"
+                            title="Download VAT Tax Invoice for this report"
+                        >
+                            <FileText className="w-4 h-4 text-emerald-400" />
+                            <span>Download Tax Invoice (PDF)</span>
+                        </a>
+
+                        <a
                             href={route('reports.pdf', report.id)}
                             className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-lg shadow-blue-500/20 transition-all"
                         >
@@ -66,6 +75,7 @@ export default function Show({ report, wallet_balance, company }) {
                             <span>Export Branded PDF Dossier</span>
                         </a>
                     </div>
+
                 </div>
 
                 {/* Main Sourcing Header Card */}

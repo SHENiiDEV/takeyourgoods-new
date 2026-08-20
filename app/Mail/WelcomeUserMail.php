@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class WelcomeEmail extends Mailable
+class WelcomeUserMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,5 +30,9 @@ class WelcomeEmail extends Mailable
             view: 'emails.welcome_user',
         );
     }
-}
 
+    public function attachments(): array
+    {
+        return [];
+    }
+}

@@ -174,6 +174,14 @@ export default function Dashboard({ reports, stats, wallet_balance, company }) {
 
                                     <div className="flex items-center space-x-2">
                                         <a
+                                            href={route('wallet.invoice', report.transaction_id || report.id)}
+                                            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold border border-slate-700 transition-colors"
+                                            title="Download Tax Invoice (PDF)"
+                                        >
+                                            <FileText className="w-3.5 h-3.5 text-emerald-400" />
+                                            <span>Invoice (PDF)</span>
+                                        </a>
+                                        <a
                                             href={route('reports.pdf', report.id)}
                                             className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-semibold border border-slate-700 transition-colors"
                                             title="Download PDF Sourcing Dossier"
@@ -189,6 +197,7 @@ export default function Dashboard({ reports, stats, wallet_balance, company }) {
                                             <ArrowRight className="w-3.5 h-3.5" />
                                         </Link>
                                     </div>
+
                                 </div>
                             ))}
                         </div>
