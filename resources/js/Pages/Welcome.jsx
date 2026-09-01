@@ -217,8 +217,9 @@ export default function Welcome({ company }) {
 
             {/* Header / Navbar */}
             <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-md">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 sm:h-28 flex items-center justify-between">
                     <BrandLogo href="/" showTagline={true} size="md" />
+
 
 
                     {/* Desktop Navigation Links */}

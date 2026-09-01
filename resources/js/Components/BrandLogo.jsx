@@ -3,10 +3,10 @@ import { Link } from '@inertiajs/react';
 
 export default function BrandLogo({ size = 'md', showTagline = false, href = '/', className = '' }) {
     const heightSizes = {
-        sm: 'h-8 sm:h-10',
-        md: 'h-11 sm:h-13 md:h-15 max-h-[64px]',
-        lg: 'h-14 sm:h-18 md:h-22',
-        xl: 'h-20 sm:h-24 md:h-28',
+        sm: 'h-10 sm:h-12',
+        md: 'h-14 sm:h-16 md:h-20 lg:h-24',
+        lg: 'h-20 sm:h-24 md:h-28 lg:h-32',
+        xl: 'h-28 sm:h-36 md:h-44',
     };
 
     const content = (
@@ -14,10 +14,11 @@ export default function BrandLogo({ size = 'md', showTagline = false, href = '/'
             <img 
                 src="/images/logo.png" 
                 alt="TakeYourGoods AI - AI Global Sourcing & Logistics Platform" 
-                className={`${heightSizes[size] || heightSizes.md} w-auto object-contain select-none filter drop-shadow-[0_4px_12px_rgba(37,99,235,0.25)]`}
+                className={`${heightSizes[size] || heightSizes.md} w-auto object-contain select-none filter drop-shadow-[0_4px_16px_rgba(37,99,235,0.3)]`}
             />
         </div>
     );
+
 
     if (href) {
         return (
