@@ -67,11 +67,15 @@ class BillingController extends Controller
 
         $amount = (float)$request->amount;
         $serviceName = match ((int)$amount) {
-            149 => 'Starter Sourcing Package Credits (€149.00)',
-            499 => 'Pro Supply Chain Sourcing Credits (€499.00)',
-            1499 => 'Enterprise Custom Turnkey Sourcing Credits (€1,499.00)',
+            359 => 'Starter Validation Sourcing Credits (€359.00)',
+            799 => 'Growth Procurement Sourcing Credits (€799.00)',
+            1499 => 'Pro Supply Chain Intelligence Credits (€1,499.00)',
+            2999 => 'Enterprise Production Suite Credits (€2,999.00)',
+            4999 => 'Turnkey Factory Direct Credits (€4,999.00)',
+            9999 => 'Global Enterprise Turnkey Architecture Credits (€9,999.00)',
             default => 'TakeYourGoods B2B Platform Balance Top-Up (€' . number_format($amount, 2) . ')',
         };
+
 
         $result = $this->walletService->topUp($user, $amount, $serviceName, [
             'payment_method' => 'card_checkout',

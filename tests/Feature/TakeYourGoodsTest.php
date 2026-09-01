@@ -95,7 +95,7 @@ class TakeYourGoodsTest extends TestCase
         Mail::fake();
 
         $user = User::factory()->create([
-            'wallet_balance' => 600.00,
+            'wallet_balance' => 2000.00,
         ]);
 
         $this->actingAs($user);
@@ -112,7 +112,7 @@ class TakeYourGoodsTest extends TestCase
         ]);
 
         $user->refresh();
-        $this->assertEquals(101.00, (float)$user->wallet_balance); // 600 - 499 = 101
+        $this->assertEquals(501.00, (float)$user->wallet_balance); // 2000 - 1499 = 501
 
         $report = SourcingReport::where('user_id', $user->id)->first();
         $this->assertNotNull($report);
@@ -130,6 +130,7 @@ class TakeYourGoodsTest extends TestCase
             return $mail->user->id === $user->id && count($mail->attachments()) > 0;
         });
     }
+
 
     public function test_insufficient_balance_prevents_report_generation(): void
     {

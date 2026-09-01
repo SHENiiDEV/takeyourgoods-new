@@ -61,8 +61,9 @@ export default function Terms({ company }) {
                                 <strong>2.2 Wallet Model:</strong> Services are billed through an internal prepaid balance system. Deposited funds are credited to the Client's wallet balance upon successful payment authorization.
                             </p>
                             <p>
-                                <strong>2.3 Automated Service Deduction:</strong> Upon submitting a request for a Sourcing Report, the system verifies available balance and automatically deducts the published tier price (e.g. Starter €149, Pro €499, Enterprise €1,499).
+                                <strong>2.3 Automated Service Deduction:</strong> Upon submitting a request for a Sourcing Report, the system verifies available balance and automatically deducts the published tier price (ranging from Starter €359 up to Global VIP €9,999).
                             </p>
+
                         </section>
 
                         <section className="space-y-2">

@@ -326,35 +326,75 @@ export default function HowItWorks({ company }) {
                         <p className="text-xs sm:text-sm text-slate-400">Choose the exact level of supplier verification required for your production scale.</p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-4">
-                            <div className="text-xs font-bold uppercase text-slate-400">Starter Tier</div>
-                            <div className="text-2xl font-extrabold text-white font-mono">{format(149, 0)}</div>
-                            <p className="text-xs text-slate-400">Ideal for initial product validation and rapid MOQ benchmark testing with 3 audited factories.</p>
-                            <Link href={user ? route('reports.create', { tier: 'starter' }) : route('register')} className="block text-center py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold">
-                                Select Starter
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-4 flex flex-col justify-between">
+                            <div className="space-y-2">
+                                <div className="text-xs font-bold uppercase text-slate-400">Starter Validation</div>
+                                <div className="text-2xl font-extrabold text-white font-mono">{format(359, 0)}</div>
+                                <p className="text-xs text-slate-400">Initial product validation and rapid MOQ benchmark testing with 3 audited factories.</p>
+                            </div>
+                            <Link href={user ? route('reports.create', { tier: 'starter' }) : route('register')} className="block text-center py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition-colors">
+                                Select Starter ({format(359, 0)})
                             </Link>
                         </div>
 
-                        <div className="p-6 rounded-2xl bg-slate-900 border-2 border-blue-500 shadow-xl shadow-blue-500/10 space-y-4 relative">
+                        <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-4 flex flex-col justify-between">
+                            <div className="space-y-2">
+                                <div className="text-xs font-bold uppercase text-indigo-400">Growth Sourcing</div>
+                                <div className="text-2xl font-extrabold text-white font-mono">{format(799, 0)}</div>
+                                <p className="text-xs text-slate-400">5 audited suppliers, complete landed cost breakdowns, and bilingual RFQ drafts.</p>
+                            </div>
+                            <Link href={user ? route('reports.create', { tier: 'growth' }) : route('register')} className="block text-center py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition-colors">
+                                Select Growth ({format(799, 0)})
+                            </Link>
+                        </div>
+
+                        <div className="p-6 rounded-2xl bg-slate-900 border-2 border-blue-500 shadow-xl shadow-blue-500/10 space-y-4 relative flex flex-col justify-between">
                             <span className="absolute -top-3 right-6 bg-blue-500 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase">Most Popular</span>
-                            <div className="text-xs font-bold uppercase text-blue-400">Pro Sourcing Tier</div>
-                            <div className="text-2xl font-extrabold text-white font-mono">{format(499, 0)}</div>
-                            <p className="text-xs text-slate-400">Comprehensive supply chain dossier with 5 audited suppliers, complete landed cost breakdowns, and bilingual RFQ drafts.</p>
-                            <Link href={user ? route('reports.create', { tier: 'pro' }) : route('register')} className="block text-center py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-md shadow-blue-500/25">
-                                Select Pro
+                            <div className="space-y-2">
+                                <div className="text-xs font-bold uppercase text-blue-400">Pro Supply Chain</div>
+                                <div className="text-2xl font-extrabold text-white font-mono">{format(1499, 0)}</div>
+                                <p className="text-xs text-slate-400">8 verified tier-1 factories, golden sample QC checklist, and video telemetry.</p>
+                            </div>
+                            <Link href={user ? route('reports.create', { tier: 'pro' }) : route('register')} className="block text-center py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-md shadow-blue-500/25 transition-colors">
+                                Select Pro ({format(1499, 0)})
                             </Link>
                         </div>
 
-                        <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-4">
-                            <div className="text-xs font-bold uppercase text-purple-400">Enterprise Turnkey Tier</div>
-                            <div className="text-2xl font-extrabold text-white font-mono">{format(1499, 0)}</div>
-                            <p className="text-xs text-slate-400">Institutional-grade supply chain intelligence with 8 factories, full OEM tooling audit, and customs tariff defense notes.</p>
-                            <Link href={user ? route('reports.create', { tier: 'enterprise' }) : route('register')} className="block text-center py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold">
-                                Select Enterprise
+                        <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-4 flex flex-col justify-between">
+                            <div className="space-y-2">
+                                <div className="text-xs font-bold uppercase text-purple-400">Enterprise Suite</div>
+                                <div className="text-2xl font-extrabold text-white font-mono">{format(2999, 0)}</div>
+                                <p className="text-xs text-slate-400">12 facilities, on-site ISO/BSCI compliance, escrow guidance, and logistics plan.</p>
+                            </div>
+                            <Link href={user ? route('reports.create', { tier: 'enterprise' }) : route('register')} className="block text-center py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition-colors">
+                                Select Enterprise ({format(2999, 0)})
+                            </Link>
+                        </div>
+
+                        <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-4 flex flex-col justify-between">
+                            <div className="space-y-2">
+                                <div className="text-xs font-bold uppercase text-pink-400">Turnkey Factory Direct</div>
+                                <div className="text-2xl font-extrabold text-white font-mono">{format(4999, 0)}</div>
+                                <p className="text-xs text-slate-400">18 manufacturers, custom mold &amp; tooling feasibility, and senior engineer review.</p>
+                            </div>
+                            <Link href={user ? route('reports.create', { tier: 'turnkey' }) : route('register')} className="block text-center py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition-colors">
+                                Select Turnkey ({format(4999, 0)})
+                            </Link>
+                        </div>
+
+                        <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-4 flex flex-col justify-between">
+                            <div className="space-y-2">
+                                <div className="text-xs font-bold uppercase text-emerald-400">Global Enterprise VIP</div>
+                                <div className="text-2xl font-extrabold text-white font-mono">{format(9999, 0)}</div>
+                                <p className="text-xs text-slate-400">Unlimited intelligence, dedicated sourcing architect, and full legal defense pack.</p>
+                            </div>
+                            <Link href={user ? route('reports.create', { tier: 'vip_global' }) : route('register')} className="block text-center py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition-colors">
+                                Select VIP Global ({format(9999, 0)})
                             </Link>
                         </div>
                     </div>
+
                 </div>
             </section>
 

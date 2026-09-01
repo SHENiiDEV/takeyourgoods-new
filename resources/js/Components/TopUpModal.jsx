@@ -30,25 +30,44 @@ export default function TopUpModal({ isOpen, onClose, defaultAmount = 499 }) {
 
     const presets = [
         {
-            amount: 149,
-            title: 'Starter Pack',
-            desc: '5 verified factories + basic unit economics',
-            tag: 'Entry',
+            amount: 359,
+            title: 'Starter Validation',
+            desc: '3 verified factory audits + basic landed cost calculation',
+            tag: 'Starter',
         },
         {
-            amount: 499,
-            title: 'Pro Sourcing',
-            desc: 'In-depth supply chain, logistics & audit verification',
+            amount: 799,
+            title: 'Growth Sourcing',
+            desc: '5 audited suppliers, duty maps & bilingual RFQ scripts',
+            tag: 'Growth',
+        },
+        {
+            amount: 1499,
+            title: 'Pro Supply Chain',
+            desc: '8 audited manufacturers, golden sample QC & HS tariffs',
             tag: 'Most Popular',
             highlight: true,
         },
         {
-            amount: 1499,
-            title: 'Enterprise Turnkey',
-            desc: 'Full Tech Pack, direct factory intro & negotiation',
+            amount: 2999,
+            title: 'Enterprise Suite',
+            desc: '12 facilities, on-site ISO/BSCI compliance & escrow guidance',
+            tag: 'Enterprise',
+        },
+        {
+            amount: 4999,
+            title: 'Turnkey Factory Direct',
+            desc: '18 factories, tooling/mold feasibility & NNN legal note',
             tag: 'Turnkey',
         },
+        {
+            amount: 9999,
+            title: 'Global Enterprise',
+            desc: 'Unlimited supplier intelligence & dedicated sourcing architect',
+            tag: 'VIP Global',
+        },
     ];
+
 
     const handleSelectPreset = (amt) => {
         setSelectedPreset(amt);
@@ -107,7 +126,8 @@ export default function TopUpModal({ isOpen, onClose, defaultAmount = 499 }) {
                         <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
                             Select Sourcing Package Preset
                         </label>
-                        <div className="grid grid-cols-3 gap-3">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
+
                             {presets.map((preset) => {
                                 const isSelected = selectedPreset === preset.amount && !customMode;
                                 return (

@@ -37,12 +37,15 @@ export default function Create({ initial_tier = 'pro', wallet_balance, company }
     });
 
     const tierCosts = {
-        starter: 149,
-        pro: 499,
-        enterprise: 1499,
+        starter: 359,
+        growth: 799,
+        pro: 1499,
+        enterprise: 2999,
+        turnkey: 4999,
+        vip_global: 9999,
     };
 
-    const currentCost = tierCosts[data.tier] || 499;
+    const currentCost = tierCosts[data.tier] || 1499;
     const currentBalance = parseFloat(wallet_balance || 0);
     const hasEnoughBalance = currentBalance >= currentCost;
     const neededAmount = Math.max(0, currentCost - currentBalance);
@@ -50,27 +53,49 @@ export default function Create({ initial_tier = 'pro', wallet_balance, company }
     const tiers = [
         {
             id: 'starter',
-            name: 'Starter Sourcing',
-            price: 149,
-            desc: '5 verified factories + basic unit economics & RFQ template.',
-            badge: 'Basic',
+            name: 'Starter Validation',
+            price: 359,
+            desc: '3 verified factories + basic unit economics & supplier WeChat contacts.',
+            badge: 'Starter',
+        },
+        {
+            id: 'growth',
+            name: 'Growth Sourcing',
+            price: 799,
+            desc: '5 audited suppliers + reverse landed cost, customs duty mapping & RFQs.',
+            badge: 'Growth',
         },
         {
             id: 'pro',
             name: 'Pro Supply Chain',
-            price: 499,
-            desc: '6 verified tier-A factories + full landed cost, duties, QC checklist & bilingual outreach.',
+            price: 1499,
+            desc: '8 verified tier-1 factories + golden sample QC checklist & video audit telemetry.',
             badge: 'Recommended',
             highlight: true,
         },
         {
             id: 'enterprise',
-            name: 'Enterprise Turnkey',
-            price: 1499,
-            desc: '8 manufacturers + turnkey Tech Pack, BOM specs, CAD protocols & direct GM intro.',
-            badge: 'Full Turnkey',
+            name: 'Enterprise Suite',
+            price: 2999,
+            desc: '12 facilities + on-site ISO/BSCI compliance, escrow terms & multi-port logistics.',
+            badge: 'Enterprise',
+        },
+        {
+            id: 'turnkey',
+            name: 'Turnkey Factory Direct',
+            price: 4999,
+            desc: '18 factories + custom tooling/mold feasibility, IP protection & engineer review.',
+            badge: 'Turnkey Direct',
+        },
+        {
+            id: 'vip_global',
+            name: 'Global Enterprise VIP',
+            price: 9999,
+            desc: 'Unlimited supplier intelligence + dedicated sourcing architect & executive director.',
+            badge: 'VIP Global',
         },
     ];
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -123,7 +148,8 @@ export default function Create({ initial_tier = 'pro', wallet_balance, company }
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-400">
                             1. Select Sourcing Package Tier
                         </label>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
                             {tiers.map((t) => {
                                 const isSelected = data.tier === t.id;
                                 return (

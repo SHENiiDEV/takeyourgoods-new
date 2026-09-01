@@ -67,7 +67,7 @@ class SourcingReportController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'tier' => 'required|in:starter,pro,enterprise',
+            'tier' => 'required|in:starter,growth,pro,enterprise,turnkey,vip_global',
             'product_name' => 'required|string|min:3|max:255',
             'product_category' => 'nullable|string|max:255',
             'target_cost' => 'nullable|numeric|min:0.1|max:100000',
@@ -81,16 +81,25 @@ class SourcingReportController extends Controller
         $tier = $request->tier;
 
         $tierCost = match ($tier) {
-            'starter' => 149.00,
-            'pro' => 499.00,
-            'enterprise' => 1499.00,
+            'starter' => 359.00,
+            'growth' => 799.00,
+            'pro' => 1499.00,
+            'enterprise' => 2999.00,
+            'turnkey' => 4999.00,
+            'vip_global' => 9999.00,
+            default => 1499.00,
         };
 
         $tierName = match ($tier) {
-            'starter' => 'Starter Sourcing Report (€149)',
-            'pro' => 'Pro Supply Chain Sourcing Report (€499)',
-            'enterprise' => 'Enterprise Custom Turnkey Sourcing Pack (€1,499)',
+            'starter' => 'Starter Validation Sourcing Pack (€359)',
+            'growth' => 'Growth Procurement Sourcing Pack (€799)',
+            'pro' => 'Pro Supply Chain Sourcing Report (€1,499)',
+            'enterprise' => 'Enterprise Production Suite (€2,999)',
+            'turnkey' => 'Turnkey Factory Direct Sourcing Pack (€4,999)',
+            'vip_global' => 'Global Enterprise Turnkey Architecture (€9,999)',
+            default => 'Pro Supply Chain Sourcing Report (€1,499)',
         };
+
 
         // Check if user has sufficient funds
         if (!$user->hasSufficientBalance($tierCost)) {

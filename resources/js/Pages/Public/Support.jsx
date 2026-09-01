@@ -50,9 +50,10 @@ export default function Support({ company }) {
             a: "Yes! Every sourcing report generated in your dashboard comes with both an interactive dashboard view (complete with bilingual Chinese RFQ scripts, landed cost calculators, and factory manager contacts) as well as an official exportable PDF document ready to be shared with stakeholders."
         },
         {
-            q: "What is the difference between Starter, Pro, and Enterprise tiers?",
-            a: "The Starter tier (" + format(149, 0) + ") gives you 3 audited factory matches for rapid feasibility testing. The Pro tier (" + format(499, 0) + ") provides 5 audited factories, complete reverse landed cost models, customs duty mapping, and bilingual RFQ drafts. The Enterprise tier (" + format(1499, 0) + ") includes 8 suppliers, full tooling analysis, golden sample QC protocols, and customs tariff defense notes."
+            q: "What is the difference between the 6 Sourcing Tiers?",
+            a: "We offer 6 transparent tiers tailored to your production scale: Starter Validation (" + format(359, 0) + ") for rapid feasibility; Growth Sourcing (" + format(799, 0) + ") for scaling brands; Pro Supply Chain (" + format(1499, 0) + ") with golden sample QC & video audit telemetry; Enterprise Suite (" + format(2999, 0) + ") for multi-port production runs; Turnkey Factory Direct (" + format(4999, 0) + ") with custom mold tooling analysis; and Global Enterprise VIP (" + format(9999, 0) + ") with a dedicated sourcing architect."
         },
+
         {
             q: "Who owns the intellectual property and product designs?",
             a: "You retain 100% ownership of your intellectual property, custom molds, product concepts, and negotiation channels. TakeYourGoods AI acts solely as an autonomous intelligence orchestrator."

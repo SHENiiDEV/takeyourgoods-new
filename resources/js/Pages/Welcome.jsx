@@ -84,60 +84,109 @@ export default function Welcome({ company }) {
     const tiers = [
         {
             id: 'starter',
-            name: 'Starter',
-            price: 149,
+            name: 'Starter Validation',
+            price: 359,
             currency: '€',
-            badge: 'Basic Entry',
-            desc: 'Niche feasibility analysis and verified supplier shortlisting for new product validation.',
+            badge: 'Validation Entry',
+            desc: 'Rapid feasibility testing and verified supplier shortlisting for new product validation.',
             features: [
-                'Shortlist of 5 Audited OEM/ODM Factories',
+                'Shortlist of 3 Audited OEM/ODM Factories',
                 'Verified ISO9001 & BSCI Certification Checks',
-                'Estimated EXW Unit Production Cost Range',
-                'Direct English RFQ Factory Outreach Template',
-                'Instant PDF Report Export',
+                'Estimated EXW Unit Cost Range & MOQ Benchmarks',
+                'Direct Supplier WeChat & Export Manager Contacts',
+                'Instant PDF Sourcing Dossier Export',
             ],
             highlight: false,
-            ctaText: 'Start with Starter (€149)',
+            ctaText: 'Start with Starter (€359)',
+        },
+        {
+            id: 'growth',
+            name: 'Growth Sourcing',
+            price: 799,
+            currency: '€',
+            badge: 'Scaling Brands',
+            desc: 'Comprehensive unit economics, landed cost calculation, duty brackets & bilingual RFQs.',
+            features: [
+                'Shortlist of 5 Verified Tier-1 Factories',
+                'Reverse Landed Cost Model (Sea & Air Freight)',
+                'Customs HS Code & Import Duty Bracket Mapping',
+                'Bilingual Chinese/English RFQ Negotiation Scripts',
+                'Supplier Tooling & Lead Time Benchmarks',
+            ],
+            highlight: false,
+            ctaText: 'Select Growth Pack (€799)',
         },
         {
             id: 'pro',
-            name: 'Pro Sourcing',
-            price: 499,
+            name: 'Pro Supply Chain',
+            price: 1499,
             currency: '€',
             badge: 'Most Popular',
-            desc: 'Deep-dive reverse unit economics, logistics tariffs, compliance matrix and bilingual outreach.',
+            desc: 'Institutional-grade supply chain intelligence, golden sample QC & video audit telemetry.',
             features: [
-                'Shortlist of 6 Verified Tier-A Factories',
-                'Comprehensive Reverse Landed Cost Model (Sea & Air)',
-                'Customs HS Code & Import Duty Bracket Mapping',
-                'ANSI/ASQ Z1.4 Quality Control & Pre-Shipment Checklist',
-                'Bilingual Outreach Scripts (English & Chinese for WeChat/1688)',
+                'Shortlist of 8 Certified High-Capacity Manufacturers',
+                'Milestone Golden Sample Quality Control Checklist',
+                'Detailed Bill of Materials (BOM) & CAD Tolerance Notes',
+                'Verified Factory Video Audit Telemetry',
                 'Price Negotiation Counter-Offer Playbook',
-                'B2B Tax Invoice with 0% VAT Reverse Charge',
+                'Official UK B2B Tax Invoice with 0% Reverse Charge',
             ],
             highlight: true,
-            ctaText: 'Generate Pro Report (€499)',
+            ctaText: 'Generate Pro Report (€1,499)',
         },
         {
             id: 'enterprise',
-            name: 'Enterprise Turnkey',
-            price: 1499,
+            name: 'Enterprise Suite',
+            price: 2999,
             currency: '€',
-            badge: 'Turnkey Production',
-            desc: 'Full documentation package, Tech Pack specifications, and turnkey factory launch preparation.',
+            badge: 'Volume Production',
+            desc: 'High-volume production batches, on-site ISO/BSCI compliance & multi-port shipping analysis.',
             features: [
-                'Shortlist of 8 Certified High-Capacity Manufacturers',
-                'Full Bill of Materials (BOM) & CAD Spec Guidance',
-                'Bespoke Packaging & Master Carton Palletization Protocols',
-                'Multi-Country Sourcing Comparison (China vs. Vietnam)',
-                'Custom Mold & Tooling Amortization Schedule',
-                'Direct Factory GM Introduction & Executive Escrow Protocol',
-                'Priority Dedicated Supply Chain Support',
+                'Shortlist of 12 Audited Tier-1 OEM/ODM Facilities',
+                'On-Site Compliance & Social Audit Dossiers',
+                'Direct Factory GM Introduction & Escrow Protocol',
+                'Multi-Port Shipping & Container Consolidation Plan',
+                'Packaging & Master Carton Palletization Protocols',
             ],
             highlight: false,
-            ctaText: 'Launch Enterprise Pack (€1,499)',
+            ctaText: 'Select Enterprise Suite (€2,999)',
+        },
+        {
+            id: 'turnkey',
+            name: 'Turnkey Factory Direct',
+            price: 4999,
+            currency: '€',
+            badge: 'Custom Mold & OEM',
+            desc: 'Custom mold & tooling feasibility, IP protection strategy, and senior trade desk review.',
+            features: [
+                '18 Tier-1 Manufacturers & Tooling Lines',
+                'Custom Mold (Tooling) Feasibility & Amortization Model',
+                'IP Protection & Bilingual NNN / NDA Legal Defense Note',
+                'Multi-Country Sourcing Matrix (China vs. Vietnam)',
+                'Priority 24/7 Trade Desk Dispatch & Engineer Review',
+            ],
+            highlight: false,
+            ctaText: 'Launch Turnkey Direct (€4,999)',
+        },
+        {
+            id: 'vip_global',
+            name: 'Global Enterprise VIP',
+            price: 9999,
+            currency: '€',
+            badge: 'Global Turnkey VIP',
+            desc: 'Dedicated sourcing architect, full legal defense pack, and custom API integration.',
+            features: [
+                'Unlimited Custom Supplier Intelligence & Vetting',
+                'Dedicated Sourcing Architect & Executive Account Director',
+                'End-to-End Factory Audit & Full Compliance Legal Defense',
+                'Custom API Sourcing Integration & Continuous Price Monitoring',
+                'Direct In-Person Factory Escort & Contract Negotiation',
+            ],
+            highlight: false,
+            ctaText: 'Deploy VIP Global (€9,999)',
         },
     ];
+
 
     const faqs = [
         {
@@ -146,8 +195,9 @@ export default function Welcome({ company }) {
         },
         {
             q: "How does the EUR Wallet and billing model work?",
-            a: "You top up your company wallet balance with EUR (€) using credit card or bank transfer. When you generate a report, the exact tier amount (€149, €499, or €1,499) is deducted automatically. You instantly receive an official UK B2B Tax Invoice issued by COLCHESTER LTD with 0% Reverse Charge VAT."
+            a: "You top up your company wallet balance with EUR (€) using credit card or bank transfer. When you generate a report, the exact tier amount (ranging from €359 for Starter up to €9,999 for Global VIP) is deducted automatically. You instantly receive an official UK B2B Tax Invoice issued by COLCHESTER LTD with 0% Reverse Charge VAT."
         },
+
         {
             q: "Who owns the generated sourcing data and outreach templates?",
             a: "You own 100% of the intellectual property, supplier contacts, unit economics models, and custom RFQ drafts generated for your brief. TakeYourGoods AI never claims rights over your product concepts or proprietary specifications."
@@ -696,7 +746,7 @@ export default function Welcome({ company }) {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
                         {tiers.map((tier) => (
                             <div
                                 key={tier.id}
@@ -744,7 +794,7 @@ export default function Welcome({ company }) {
                                                 : 'bg-slate-800 hover:bg-slate-700 text-white border border-slate-700'
                                         }`}
                                     >
-                                        <span>{tier.id === 'starter' ? `Start with Starter (${format(tier.price, 0)})` : tier.id === 'pro' ? `Generate Pro Report (${format(tier.price, 0)})` : `Launch Enterprise Pack (${format(tier.price, 0)})`}</span>
+                                        <span>{tier.ctaText}</span>
                                         <ArrowRight className="w-4 h-4" />
                                     </Link>
                                     <div className="text-center text-[10px] text-slate-500 mt-2">
@@ -754,6 +804,7 @@ export default function Welcome({ company }) {
                             </div>
                         ))}
                     </div>
+
 
                 </div>
             </section>
