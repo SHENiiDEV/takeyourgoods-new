@@ -51,8 +51,9 @@ export default function Contact({ company }) {
 
             {/* Header */}
             <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-md">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
                     <BrandLogo href="/" showTagline={true} size="md" />
+
 
                     <nav className="hidden lg:flex items-center space-x-6 text-xs font-semibold text-slate-300">
                         <Link href={route('how-it-works')} className="hover:text-blue-400 transition-colors">How It Works</Link>
